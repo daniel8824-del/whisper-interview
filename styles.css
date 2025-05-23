@@ -1,0 +1,244 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #F8F9FA;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.score-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.score-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    color: #333;
+}
+
+.score-card.answer { 
+    background-color: rgba(74, 144, 226, 0.1);
+    border-left: 4px solid #4A90E2;
+}
+.score-card.intent { 
+    background-color: rgba(80, 227, 194, 0.1);
+    border-left: 4px solid #50E3C2;
+}
+.score-card.emotion { 
+    background-color: rgba(255, 176, 87, 0.1);
+    border-left: 4px solid #FFB057;
+}
+.score-card.competency { 
+    background-color: rgba(181, 126, 220, 0.1);
+    border-left: 4px solid #B57EDC;
+}
+
+.score-card.total { 
+    background-color: #2C3E50; 
+    min-width: 250px;
+}
+
+.score-card.total .score-value {
+    font-size: 32px;
+}
+
+.score-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.evaluation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.evaluation-box {
+    padding: 20px;
+    background: #F8F9FA;
+    border-radius: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #E9ECEF;
+    border-radius: 4px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4A90E2;
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.p0 { width: 0%; }
+.p10 { width: 10%; }
+.p20 { width: 20%; }
+.p30 { width: 30%; }
+.p40 { width: 40%; }
+.p50 { width: 50%; }
+.p60 { width: 60%; }
+.p70 { width: 70%; }
+.p80 { width: 80%; }
+.p90 { width: 90%; }
+.p100 { width: 100%; }
+
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.details-list + .details-list {
+    margin-top: 20px;
+}
+
+.details-list li {
+    margin: 8px 0;
+    padding: 8px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.points-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.positive-points, .negative-points {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.positive-points {
+    background-color: rgba(135, 206, 235, 0.1);
+    border-left: 4px solid #87CEEB;
+}
+
+.negative-points {
+    background-color: rgba(255, 107, 107, 0.1);
+    border-left: 4px solid #FF6B6B;
+}
+
+.score {
+    font-weight: bold;
+    color: #4A90E2;
+}
+
+.total-score-card {
+    background-color: rgba(44, 62, 80, 0.1);
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-left: 4px solid #2C3E50;
+}
+
+.total-score-card h3 {
+    margin: 0;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.total-score-card .score-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+    .score-overview { flex-direction: column; }
+    .score-card { margin: 0 0 10px 0; }
+    .evaluation-grid { grid-template-columns: 1fr; }
+    .points-grid { grid-template-columns: 1fr; }
+} 
+
+.no-margin {
+    margin-bottom: 0;
+}
+
+.expertise-keywords {
+    margin-top: 2px;
+}
+
+.expertise-keywords li {
+    margin: 8px 0;
+    padding: 4px 8px;
+    background: white;
+    border-radius: 4px;
+} 
+
+/* 키워드 클라우드 스타일 */
+.keyword-cloud {
+    margin: 10px 0;
+}
+
+.keyword-cloud li {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 답변 상세도 레벨별 스타일 */
+.score-level-높음 {
+    color: #27AE60;
+    font-weight: bold;
+}
+
+.score-level-보통 {
+    color: #F39C12;
+    font-weight: bold;
+}
+
+.score-level-낮음 {
+    color: #E74C3C;
+    font-weight: bold;
+} 

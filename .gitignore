@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 환경 변수
+.env
+.env.local
+.env.production
+
+# 로그 파일
+*.log
+interview_analysis.log
+
+# 업로드된 파일들
+uploads/
+results/
+test/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 임시 파일
+*.tmp
+*.temp
+test_new_features.py
+whisper_test.py 

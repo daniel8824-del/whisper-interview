@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>면접 분석 리포트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #F8F9FA;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+            text-align: center;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            margin-bottom: 25px;
+            color: #2C3E50;
+            font-weight: 600;
+        }
+
+        .score-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: #333;
+            border-left: 5px solid;
+        }
+
+        .score-card.answer { 
+            background-color: rgba(74, 144, 226, 0.1);
+            border-left-color: #4A90E2;
+        }
+        .score-card.intent { 
+            background-color: rgba(80, 227, 194, 0.1);
+            border-left-color: #50E3C2;
+        }
+        .score-card.emotion { 
+            background-color: rgba(255, 176, 87, 0.1);
+            border-left-color: #FFB057;
+        }
+        .score-card.competency { 
+            background-color: rgba(181, 126, 220, 0.1);
+            border-left-color: #B57EDC;
+        }
+
+        .score-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #2C3E50;
+        }
+
+        .evaluation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .evaluation-box {
+            padding: 25px;
+            background: #F8F9FA;
+            border-radius: 12px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #E9ECEF;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #50E3C2);
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        .p0 { width: 0%; }
+        .p10 { width: 10%; }
+        .p20 { width: 20%; }
+        .p30 { width: 30%; }
+        .p40 { width: 40%; }
+        .p50 { width: 50%; }
+        .p60 { width: 60%; }
+        .p70 { width: 70%; }
+        .p80 { width: 80%; }
+        .p90 { width: 90%; }
+        .p100 { width: 100%; }
+
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .details-list li {
+            margin: 8px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 3px solid #4A90E2;
+        }
+
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .positive-points {
+            background-color: rgba(135, 206, 235, 0.1);
+            border-left: 4px solid #87CEEB !important;
+        }
+
+        .negative-points {
+            background-color: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid #FF6B6B !important;
+        }
+
+        .score {
+            font-weight: bold;
+            color: #4A90E2;
+            font-size: 1.1em;
+        }
+
+        .total-score-card {
+            background: linear-gradient(135deg, #2C3E50, #34495E);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.3);
+        }
+
+        .total-score-card h3 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .total-score-card .score-value {
+            font-size: 3rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            margin: 0 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+
+        .expertise-keywords {
+            background: rgba(181, 126, 220, 0.1);
+        }
+
+        .expertise-keywords li {
+            background: rgba(181, 126, 220, 0.2);
+            border-left-color: #B57EDC;
+        }
+
+        /* 키워드 분석 스타일 */
+        .keyword-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .stat-value.positive { color: #27AE60; }
+        .stat-value.neutral { color: #4A90E2; }
+
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .keyword-tag {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        /* 답변 통계 스타일 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+            background: rgba(80, 227, 194, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #50E3C2;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2C3E50;
+            display: block;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .answer-quality {
+            margin-top: 20px;
+        }
+
+        .quality-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quality-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quality-label {
+            font-weight: 500;
+        }
+
+        .quality-badge {
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .quality-badge.high {
+            background: #27AE60;
+            color: white;
+        }
+
+        .quality-badge.medium {
+            background: #F39C12;
+            color: white;
+        }
+
+        .quality-badge.low {
+            background: #E74C3C;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .score-overview { grid-template-columns: 1fr; }
+            .evaluation-grid { grid-template-columns: 1fr; }
+            .points-grid { grid-template-columns: 1fr; }
+            .total-score-card h3 { font-size: 1.5rem; }
+            .total-score-card .score-value { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .keyword-stats { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-line me-3"></i>면접 분석 리포트</h1>
+            <p class="mb-0">{{ result.analysis.total_score.summary if result.analysis.total_score else "AI 기반 면접 분석 결과" }}</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-comments me-2"></i>면접 내용</h2>
+            <div class="evaluation-box">
+                <h4><i class="fas fa-question-circle me-2"></i>질문:</h4>
+                <p>{{ result.question }}</p>
+                <h4><i class="fas fa-reply me-2"></i>답변:</h4>
+                <p>{{ result.transcript }}</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-star me-2"></i>종합 평가</h2>
+            <div class="total-score-card">
+                <h3>총점: <span class="score-value">{{ result.analysis.total_score.score }}/60</span></h3>
+                <p class="mb-0">{{ result.analysis.total_score.level }}</p>
+            </div>
+            
+            <div class="score-overview">
+                <div class="score-card answer">
+                    <h5>답변 분석</h5>
+                    <div class="score-value">{{ result.analysis.answer_analysis.subtotal }}/15</div>
+                </div>
+                <div class="score-card intent">
+                    <h5>의도 분석</h5>
+                    <div class="score-value">{{ result.analysis.intent_analysis.subtotal }}/15</div>
+                </div>
+                <div class="score-card emotion">
+                    <h5>감정 분석</h5>
+                    <div class="score-value">{{ result.analysis.emotion_analysis.subtotal }}/15</div>
+                </div>
+                <div class="score-card competency">
+                    <h5>역량 평가</h5>
+                    <div class="score-value">{{ result.analysis.competency_evaluation.subtotal }}/15</div>
+                </div>
+            </div>
+            
+            <div class="points-grid">
+                <div class="evaluation-box positive-points">
+                    <h4><i class="fas fa-thumbs-up me-2"></i>긍정적인 면</h4>
+                    <ul class="details-list">
+                        {% for strength in result.analysis.total_score.key_strengths %}
+                        <li><i class="fas fa-check-circle me-2"></i>{{ strength }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="evaluation-box negative-points">
+                    <h4><i class="fas fa-exclamation-triangle me-2"></i>개선이 필요한 면</h4>
+                    <ul class="details-list">
+                        {% for improvement in result.analysis.total_score.improvements %}
+                        <li><i class="fas fa-arrow-up me-2"></i>{{ improvement }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-microscope me-2"></i>상세 분석</h2>
+            <div class="evaluation-grid">
+                <div class="evaluation-box">
+                    <h4>답변 구성</h4>
+                    <p>논리성: <span class="score">{{ result.analysis.answer_analysis.logic.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.answer_analysis.logic.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.answer_analysis.logic.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p>구체성: <span class="score">{{ result.analysis.answer_analysis.specificity.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.answer_analysis.specificity.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.answer_analysis.specificity.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p>전달력: <span class="score">{{ result.analysis.answer_analysis.delivery.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.answer_analysis.delivery.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.answer_analysis.delivery.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h4>의도 분석</h4>
+                    <p>연관성: <span class="score">{{ result.analysis.intent_analysis.relevance.score }}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.intent_analysis.relevance.score|int / 10) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.intent_analysis.relevance.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p>초점: <span class="score">{{ result.analysis.intent_analysis.focus.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.intent_analysis.focus.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.intent_analysis.focus.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h4>감정 분석</h4>
+                    <p>감정 톤: <span class="score">{{ result.analysis.emotion_analysis.tone.score }}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.emotion_analysis.tone.score|int / 10) * 100)|round|int }}"></div>
+                    </div>
+                    <p><strong>감정 분석:</strong> {{ result.analysis.emotion_analysis.tone.sentiment }}</p>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.emotion_analysis.tone.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p>어휘 선택: <span class="score">{{ result.analysis.emotion_analysis.word_choice.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.emotion_analysis.word_choice.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.emotion_analysis.word_choice.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h4>역량 평가</h4>
+                    <p>전문성: <span class="score">{{ result.analysis.competency_evaluation.expertise.score }}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.competency_evaluation.expertise.score|int / 10) * 100)|round|int }}"></div>
+                    </div>
+                    <p><strong>발견된 전문 용어:</strong></p>
+                    <ul class="details-list expertise-keywords">
+                        {% for keyword in result.analysis.competency_evaluation.expertise.keywords %}
+                        <li><i class="fas fa-tag me-2"></i>{{ keyword }}</li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.competency_evaluation.expertise.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p>의사소통: <span class="score">{{ result.analysis.competency_evaluation.communication.score }}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{{ ((result.analysis.competency_evaluation.communication.score|int / 5) * 100)|round|int }}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {% for detail in result.analysis.competency_evaluation.communication.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box keyword-analysis">
+                    <h4>키워드 분석</h4>
+                    
+                    <div class="keyword-stats" style="margin-top: 25px;">
+                        <div class="stat-item">
+                            <span class="stat-label">긍정 표현</span>
+                            <span class="stat-value positive">75%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">전문 용어</span>
+                            <span class="stat-value neutral">{{ result.analysis.competency_evaluation.expertise.keywords|length }}개</span>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 20px;"><strong>주요 키워드:</strong></p>
+                    <div class="keyword-cloud">
+                        <span class="keyword-tag">창의적</span>
+                        <span class="keyword-tag">소통</span>
+                        <span class="keyword-tag">개발</span>
+                        <span class="keyword-tag">노력</span>
+                        <span class="keyword-tag">만족도</span>
+                    </div>
+                    
+                    <p style="margin-top: 20px;"><strong>감정 표현:</strong></p>
+                    <ul class="details-list">
+                        <li><i class="fas fa-smile me-2"></i>긍정적 어조가 주를 이룸</li>
+                        <li><i class="fas fa-heart me-2"></i>열정과 애정이 드러나는 표현 사용</li>
+                    </ul>
+                </div>
+
+                <div class="evaluation-box answer-stats">
+                    <h4>답변 통계</h4>
+                    
+                    <div class="stats-grid" style="margin-top: 25px;">
+                        <div class="stat-box">
+                            <div class="stat-number">{{ result.transcript.split()|length }}</div>
+                            <div class="stat-label">총 단어 수</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">{{ result.transcript.split('.')|length - 1 }}</div>
+                            <div class="stat-label">문장 수</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">{{ ((result.transcript.split()|length) / (result.transcript.split('.')|length - 1))|round|int }}</div>
+                            <div class="stat-label">평균 문장 길이</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">{{ ((result.transcript.split()|length) * 0.5)|round|int }}초</div>
+                            <div class="stat-label">예상 답변 시간</div>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-quality">
+                        <h6><i class="fas fa-thumbs-up me-2"></i>답변 품질</h6>
+                        <ul class="quality-list">
+                            <li>
+                                <span class="quality-label">상세도:</span>
+                                <span class="quality-badge {% if result.transcript.split()|length > 80 %}high{% elif result.transcript.split()|length > 40 %}medium{% else %}low{% endif %}">
+                                    {% if result.transcript.split()|length > 80 %}높음{% elif result.transcript.split()|length > 40 %}보통{% else %}낮음{% endif %}
+                                </span>
+                            </li>
+                            <li>
+                                <span class="quality-label">구조화:</span>
+                                <span class="quality-badge medium">보통</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/" class="btn btn-custom">
+                <i class="fas fa-plus me-2"></i>새로운 분석
+            </a>
+            <a href="/download/{{ analysis_id }}" class="btn btn-custom">
+                <i class="fas fa-download me-2"></i>결과 다운로드
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

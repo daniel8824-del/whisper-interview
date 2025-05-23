@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>면접 분석 리포트</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>면접 분석 리포트</h1>
+            <p>{date}</p>
+        </div>
+
+        <div class="section">
+            <h2>면접 내용</h2>
+            <div class="evaluation-box">
+                <h3>질문:</h3>
+                <p>{question}</p>
+                <h3>답변:</h3>
+                <p>{answer}</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>종합 평가</h2>
+            <div class="total-score-card">
+                <h3>총점: <span class="score-value">{total_score}/60</span></h3>
+            </div>
+            <div class="score-overview">
+                <div class="score-card answer">
+                    <h3>답변 분석</h3>
+                    <div class="score-value">{answer_score}/15</div>
+                </div>
+                <div class="score-card intent">
+                    <h3>의도 분석</h3>
+                    <div class="score-value">{intent_score}/15</div>
+                </div>
+                <div class="score-card emotion">
+                    <h3>감정 분석</h3>
+                    <div class="score-value">{emotion_score}/15</div>
+                </div>
+                <div class="score-card competency">
+                    <h3>역량 평가</h3>
+                    <div class="score-value">{competency_score}/15</div>
+                </div>
+            </div>
+            
+            <div class="points-grid">
+                <div class="evaluation-box positive-points">
+                    <h3>긍정적인 면</h3>
+                    <div class="details">{strengths}</div>
+                </div>
+                <div class="evaluation-box negative-points">
+                    <h3>부정적인 면</h3>
+                    <div class="details">{improvements}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>상세 분석</h2>
+            <div class="evaluation-grid">
+                <div class="evaluation-box">
+                    <h3>답변 구성</h3>
+                    <p>논리성: <span class="score">{logic_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{logic_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {logic_details}
+                    </ul>
+                    
+                    <p>구체성: <span class="score">{specificity_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{specificity_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {specificity_details}
+                    </ul>
+                    
+                    <p>전달력: <span class="score">{delivery_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{delivery_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {delivery_details}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h3>의도 분석</h3>
+                    <p>연관성: <span class="score">{relevance_score}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{relevance_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {relevance_details}
+                    </ul>
+                    
+                    <p>초점: <span class="score">{focus_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{focus_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {focus_details}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h3>감정 분석</h3>
+                    <p>감정 톤: <span class="score">{tone_score}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{tone_score_percent}"></div>
+                    </div>
+                    <p class="no-margin">감정 분석:</p>
+                    <ul class="details-list expertise-keywords">
+                        <li>{sentiment}</li>
+                    </ul>
+                    <ul class="details-list">
+                        {tone_details}
+                    </ul>
+                    
+                    <p>어휘 선택: <span class="score">{word_choice_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{word_choice_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {word_choice_details}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h3>역량 평가</h3>
+                    <p>전문성: <span class="score">{expertise_score}/10점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{expertise_score_percent}"></div>
+                    </div>
+                    <p class="no-margin">발견된 전문 용어:</p>
+                    <ul class="details-list expertise-keywords">
+                        {expertise_keywords}
+                    </ul>
+                    <ul class="details-list">
+                        {expertise_details}
+                    </ul>
+                    
+                    <p>의사소통: <span class="score">{communication_score}/5점</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill p{communication_score_percent}"></div>
+                    </div>
+                    <ul class="details-list">
+                        {communication_details}
+                    </ul>
+                </div>
+
+                <div class="evaluation-box">
+                    <h3>키워드 분석</h3>
+                    <div style="margin-top: 25px;">
+                        <p>긍정 표현 비율: <span class="score">{positive_ratio}</span></p>
+                        <p>전문 용어 개수: <span class="score">{professional_terms_count}개</span></p>
+                        
+                        <p class="no-margin" style="margin-top: 20px;">주요 키워드:</p>
+                        <div class="keyword-cloud">
+                            {main_keywords}
+                        </div>
+                        
+                        <p class="no-margin" style="margin-top: 20px;">감정 표현:</p>
+                        <ul class="details-list">
+                            {emotional_expressions}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="evaluation-box">
+                    <h3>답변 통계</h3>
+                    <div style="margin-top: 25px;">
+                        <p>총 단어수: <span class="score">{total_words}개</span></p>
+                        <p>문장수: <span class="score">{total_sentences}개</span></p>
+                        <p>평균 문장 길이: <span class="score">{avg_sentence_length}단어</span></p>
+                        <p>예상 답변 시간: <span class="score">{estimated_time}초</span></p>
+                        <p>답변 상세도: <span class="score score-level-{detail_level}">{detail_level}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
