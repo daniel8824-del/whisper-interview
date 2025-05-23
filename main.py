@@ -15,13 +15,14 @@ from interview_analyzer import process_interview_recording, get_transcript_only,
 
 app = FastAPI(title="면접 분석 서비스", description="AI 기반 면접 분석 플랫폼")
 
+# 필요한 디렉토리 생성
+os.makedirs("uploads", exist_ok=True)
+os.makedirs("results", exist_ok=True)
+os.makedirs("static", exist_ok=True)
+
 # 정적 파일 및 템플릿 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-
-# 업로드 디렉토리 생성
-os.makedirs("uploads", exist_ok=True)
-os.makedirs("results", exist_ok=True)
 
 # 분석 진행 상태를 저장할 딕셔너리
 analysis_status = {}
